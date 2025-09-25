@@ -112,16 +112,12 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
               selectedValue={actionType}
               onValueChange={(itemValue) => setActionType(itemValue)}
               dropdownIconColor="#6B7280"
+              placeholder="Sélectionnez le type d'action"
             >
-              <Picker.Item
-                label="Sélectionnez le type d'action"
-                value=""
-                color="#9CA3AF"
-              />
-              <Picker.Item label="Meal" value="meal" />
+              <Picker.Item label="Repas" value="meal" />
               <Picker.Item label="Check-In" value="checkin" />
               <Picker.Item label="Check-Out" value="checkout" />
-              <Picker.Item label="Enter Event" value="event" />
+              <Picker.Item label="Événement" value="event" />
             </Picker>
           </View>
         </View>
@@ -135,15 +131,11 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
                 selectedValue={mealType}
                 onValueChange={(itemValue) => setMealType(itemValue)}
                 dropdownIconColor="#6B7280"
+                placeholder="Sélectionnez le type de repas"
               >
-                <Picker.Item
-                  label="Sélectionnez le type de repas"
-                  value=""
-                  color="#9CA3AF"
-                />
-                <Picker.Item label="Breakfast" value="breakfast" />
-                <Picker.Item label="Lunch" value="lunch" />
-                <Picker.Item label="Dinner" value="dinner" />
+                <Picker.Item label="Petit-déjeuner" value="breakfast" />
+                <Picker.Item label="Déjeuner" value="lunch" />
+                <Picker.Item label="Dîner" value="dinner" />
               </Picker>
             </View>
           </View>
