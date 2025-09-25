@@ -8,7 +8,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { ArrowLeft, Calendar as CalendarIcon } from "lucide-react-native";
+import { ArrowLeft, Calendar as CalendarIcon, X } from "lucide-react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
@@ -21,20 +21,34 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
   const [prenom, setPrenom] = useState("");
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [actionType, setActionType] = useState("");
-  const [mealType, setMealType] = useState("");
+  const [actionType, setActionType] = useState<string | undefined>(undefined);
+  const [mealType, setMealType] = useState<string | undefined>(undefined);
 
   const handleReset = () => {
     setNom("");
     setPrenom("");
     setDate(undefined);
-    setActionType("");
-    setMealType("");
+    setActionType(undefined);
+    setMealType(undefined);
   };
 
   const handleAdd = () => {
     console.log({ nom, prenom, date, actionType, mealType });
   };
+
+  // Dropdown items
+  const actionItems = [
+    { label: "Repas", value: "meal" },
+    { label: "Check-In", value: "checkin" },
+    { label: "Check-Out", value: "checkout" },
+    { label: "Événement", value: "event" },
+  ];
+
+  const mealItems = [
+    { label: "Petit-déjeuner", value: "breakfast" },
+    { label: "Déjeuner", value: "lunch" },
+    { label: "Dîner", value: "dinner" },
+  ];
 
   return (
     <View style={styles.container}>
@@ -84,7 +98,11 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
             onPress={() => setShowDatePicker(true)}
           >
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CalendarIcon color="#6B7280" size={18} style={{ marginRight: 8 }} />
+              <CalendarIcon
+                color="#6B7280"
+                size={18}
+                style={{ marginRight: 8 }}
+              />
               <Text style={date ? styles.valueText : styles.placeholderText}>
                 {date ? date.toDateString() : "Sélectionnez une date"}
               </Text>
@@ -104,23 +122,39 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
           )}
         </View>
 
-        {/* Type of Action */}
+        {/* Type of Action with X icon */}
         <View style={styles.field}>
           <Text style={styles.label}>Type of Action</Text>
           <View style={styles.pickerWrapper}>
             <Picker
               selectedValue={actionType}
-              onValueChange={(itemValue) => setActionType(itemValue)}
-              dropdownIconColor="#6B7280"
-              placeholder="Sélectionnez le type d'action"
+              onValueChange={(val) => setActionType(val)}
+              style={styles.pickerWithPadding} // <-- extra right padding
             >
-              <Picker.Item label="Repas" value="meal" />
-              <Picker.Item label="Check-In" value="checkin" />
-              <Picker.Item label="Check-Out" value="checkout" />
-              <Picker.Item label="Événement" value="event" />
+              <Picker.Item
+                label="Sélectionnez le type d'action"
+                value={undefined}
+                color="#9CA3AF"
+              />
+              {actionItems.map((item) => (
+                <Picker.Item key={item.value} label={item.label} value={item.value} />
+              ))}
             </Picker>
+
+            {actionType && (
+              <TouchableOpacity
+                style={styles.clearIconFixed} // <-- positioned far right
+                onPress={() => {
+                  setActionType(undefined);
+                  setMealType(undefined);
+                }}
+              >
+                <X color="#6B7280" size={18} />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
+
 
         {/* Meal Type (conditional) */}
         {actionType === "meal" && (
@@ -129,14 +163,26 @@ export function ManualEntryScreen({ onBack }: ManualEntryScreenProps) {
             <View style={styles.pickerWrapper}>
               <Picker
                 selectedValue={mealType}
-                onValueChange={(itemValue) => setMealType(itemValue)}
-                dropdownIconColor="#6B7280"
-                placeholder="Sélectionnez le type de repas"
+                onValueChange={(val) => setMealType(val)}
               >
-                <Picker.Item label="Petit-déjeuner" value="breakfast" />
-                <Picker.Item label="Déjeuner" value="lunch" />
-                <Picker.Item label="Dîner" value="dinner" />
+                <Picker.Item
+                  label="Sélectionnez le type de repas"
+                  value={undefined}
+                  color="#9CA3AF"
+                />
+                {mealItems.map((item) => (
+                  <Picker.Item key={item.value} label={item.label} value={item.value} />
+                ))}
               </Picker>
+              {mealType && (
+                <TouchableOpacity
+                  style={styles.clearIcon}
+                  onPress={() => setMealType(undefined)}
+                >
+                  
+                  <X color="#6B7280" size={18} />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         )}
@@ -196,6 +242,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#F3F4F6",
     overflow: "hidden",
+    position: "relative",
+  },
+  clearIcon: {
+    position: "absolute",
+    right: 8,
+    top: Platform.OS === "ios" ? 16 : 14,
+    padding: 4,
   },
   buttons: {
     flexDirection: "row",
@@ -223,5 +276,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 8,
   },
+  pickerWithPadding: {
+  height: 52,
+  color: "#111827",
+  paddingRight: 32, // add space for the X icon
+},
+clearIconFixed: {
+  position: "absolute",
+  right: 8,
+  top: Platform.OS === "ios" ? 17 : 14, // vertically center
+  zIndex: 10,
+  backgroundColor: "transparent",
+  padding: 4,
+},
   addText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });

@@ -153,7 +153,7 @@ export function MealSubcategoryScreen({ onBack, onSelectMeal }: MealSubcategoryS
             </Animated.View>
           </TouchableOpacity>
           
-          <Text style={styles.title}>Select Meal Type</Text>
+          <Text style={styles.title}>Type de repas</Text>
           
           {/* Spacer to balance the layout */}
           <View style={styles.headerSpacer} />

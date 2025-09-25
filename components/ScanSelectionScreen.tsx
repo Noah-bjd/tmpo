@@ -33,7 +33,7 @@ export function ScanSelectionScreen({
   const scanOptions = [
     {
       id: 'meal',
-      label: 'Meal',
+      label: 'Repat',
       icon: UtensilsCrossed,
       color: '#f97316',
       onClick: onSelectMeal
@@ -54,7 +54,7 @@ export function ScanSelectionScreen({
     },
     {
       id: 'event',
-      label: 'Enter Event',
+      label: 'Événement',
       icon: Calendar,
       color: '#a855f7',
       onClick: () => onSelectScan('event')
@@ -115,7 +115,7 @@ export function ScanSelectionScreen({
             <Menu size={isTablet ? 28 : 24} color="#000" />
           </TouchableOpacity>
           <Text style={[styles.title, { fontSize: titleFontSize }]}>
-            Choose What to Scan
+            Sélectionnez le scan 
           </Text>
           <View style={[styles.headerSpacer, { width: isTablet ? 48 : 40 }]} />
         </View>
@@ -185,7 +185,7 @@ export function ScanSelectionScreen({
                 styles.manualEntryText, 
                 { fontSize: isTablet ? 18 : isSmallScreen ? 14 : 16 }
               ]}>
-                Add Info Manually
+                Ajouter 
               </Text>
             </TouchableOpacity>
           </View>

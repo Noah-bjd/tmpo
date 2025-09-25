@@ -47,10 +47,10 @@ export function ScanningScreen({ onBack, scanType }: ScanningScreenProps) {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={onBack} style={styles.backButton}>
+        {/* <TouchableOpacity onPress={onBack} style={styles.backButton}>
           <ArrowLeft size={20} color="#666" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Scanning in Progress</Text>
+        <Text style={styles.headerTitle}>Scanning in Progress</Text> */}
       </View>
 
       {/* Scanning Frame */}
